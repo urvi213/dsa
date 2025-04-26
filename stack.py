@@ -13,7 +13,9 @@ class Stack():
         else:
             print("stack is empty")
     def top(self): # returns top without removing it
-        return self.stack[-1] # negative index is last item
+        if self.is_empty(): return "stack is empty"
+        else:
+            return self.stack[-1] # negative index is last item
     def is_empty(self):
         if self.size() > 0: return False
         else: return True
