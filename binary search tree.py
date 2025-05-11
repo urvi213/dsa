@@ -13,6 +13,8 @@ def inorder_traversal(node):
     if node.right:
         inorder_traversal(node.right)
 
+
+
 def insert(node,item):
     if not node:
         return Tree_Node(item) # code ends at return
@@ -32,6 +34,29 @@ def search(item,node):
         return search(item,node.right)
     else:
         return False
+    
+def find_inorder_successor(node):
+    successor = node.right
+    while successor.left:
+        successor = successor.left # the left gets smaler and smaller, while still being smaller than the first right but greater than the node
+    return successor
+
+def delete(root,item):
+    if root is None:
+        return root
+    if root.value > item:
+        root.left = delete(root.left,item) # delete happening at left of parent changes left of parent
+    elif root.value < item:
+        root.right = delete(root.right,item)
+    else: # item equals root
+        if not root.left:
+            return root.right
+        if not root.right:
+            return root.left # takes care of node with no children or with 1 child.
+        successor = find_inorder_successor(root)
+        root.value = successor.value
+        root.right = delete(root.right,successor.value)
+    return root
 
 
 root = None
@@ -42,5 +67,8 @@ for i in range(amount):
 
 inorder_traversal(root)
 
-for i in range(3):
-    print(search(int(input("search for? ")),root))
+#for i in range(3):
+    #print(search(int(input("search for? ")),root))
+
+delete(root,int(input("item to be deleted: ")))
+inorder_traversal(root)
