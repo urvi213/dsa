@@ -1,7 +1,42 @@
+import queueDS
+
 class Graph():
     def __init__(self,amount):
         self.n = amount
         self.adjacency_lists = [[] for i in range(self.n)] # list comprehension
+    def create_edge(self,nodeA,nodeB):
+        self.adjacency_lists[nodeA].append(nodeB)
+        self.adjacency_lists[nodeB].append(nodeA)
         #print(self.adjacency_lists)
+    def bfs(self,source): # breadth first search
+        visited = []
+        result = []
+        queue = queueDS.Queue_DS(self.n)
+        queue.enqueue(source)
+        visited.append(source)
+        while not queue.is_empty():
+            node = queue.dequeue()
+            result.append(node)
+            for n in self.adjacency_lists[node]:
+                if n not in visited:
+                    queue.enqueue(n)
+                    visited.append(n)
+        return result
 
-graph1 = Graph(5)
+
+    
+
+graph1 = Graph(10)
+#print(graph1.adjacency_lists)
+graph1.create_edge(0,2)
+graph1.create_edge(0,3)
+graph1.create_edge(4,1)
+graph1.create_edge(2,3)
+graph1.create_edge(3,1)
+graph1.create_edge(9,1)
+graph1.create_edge(8,5)
+graph1.create_edge(7,5)
+graph1.create_edge(6,3)
+graph1.create_edge(4,8)
+
+print(graph1.bfs(0))
