@@ -44,13 +44,36 @@ def preorder_traversal(root_node):
     if root_node.right:
         preorder_traversal(root_node.right)
 
+def find_inordersuccessor(node):
+    successor = node.right
+    while successor.left:
+        successor = successor.left
+    return successor
+
+def delete(root,item):
+    if root is None:
+        return root
+    if root.value > item:
+        root.left = delete(root.left,item)
+    elif root.value < item:
+        root.right = delete(root.right,item)
+    else:
+        if not root.left:
+            return root.right
+        if not root.right:
+            return root.left
+        successor = find_inordersuccessor(root)
+        root.value = successor.value
+        root.right = delete(root.right,successor.value)
+    return root
+
 
 
 BSTs = {}
 run = True
 
 while run:
-    option = input("1 - create BST\n2 - insert node \n3 - search for node \n4 - inorder trasversal \n5 - preorder trasversal \n6 - postorder trasversal \n7 - end: ")
+    option = input("\n1 - create BST\n2 - insert node \n3 - search for node \n4 - inorder traversal \n5 - preorder traversal \n6 - postorder traversal \n7 delete node \n8 - end: ")
 
     if option == "1":
         #input("name of bst? ") = Tree_Node(input("value of node? "))
@@ -95,6 +118,13 @@ while run:
             print("BST doesn't exist")
 
     elif option == "7":
+        current_BST = input("which BST to delete an item from ? ")
+        if current_BST in BSTs:
+            delete(BSTs[current_BST],int(input("which item to delete? ")))
+        else:
+            print("BST doesn't exist")
+
+    elif option == "8":
         run = False
     else:
         print("invalid")
