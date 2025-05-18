@@ -8,7 +8,10 @@ class Queue_DS():
         else:
             print("queue is full")
     def dequeue(self):
-        return self.queue.pop(0)
+        if self.is_empty():
+            return "queue is empty"
+        else:
+            return self.queue.pop(0)
     def front(self):
         if self.is_empty(): return "queue is empty"
         else: return self.queue[0]
@@ -16,7 +19,7 @@ class Queue_DS():
         if self.is_empty(): return "queue is empty"
         else: return self.queue[-1]
     def is_empty(self):
-        if self.size() < 0: return True
+        if self.size() == 0: return True
         else: return False
     def size(self):
         return len(self.queue)
@@ -24,11 +27,11 @@ class Queue_DS():
         print(self.queue)
     
 
-queue1 = Queue_DS(5)
+"""queue1 = Queue_DS(5)
 for i in range(3):
     queue1.enqueue(i)
 queue1.display()
 print(queue1.front())
 print(queue1.rear())
 queue1.dequeue()
-queue1.display()
+queue1.display()"""
